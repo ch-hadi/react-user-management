@@ -3,13 +3,10 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
 import {AiOutlineUsergroupAdd} from 'react-icons/ai'
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
@@ -18,7 +15,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createAccount } from './store/addUserSlice';
 import {useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid';
-import { AvatarGroup } from '@mui/material';
 
 function Copyright(props) {
     return (
@@ -35,14 +31,14 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function AddUser() {
 
 
     const [userData1, SetUserData] = useState('');
     // const [loading, setLoading] = useState(false);
     const dispatch = useDispatch()
 
-    const t = useSelector((state)=>state.persistedReducer.AddUserReducer)
+    const existedUser = useSelector((state)=>state.persistedReducer.AddUserReducer.existUser)
 
    
     const handleSubmit = async (event) => {
@@ -78,6 +74,8 @@ export default function SignUp() {
         // console.log(userData)
        dispatch(createAccount(userData))
 
+       console.log('Exist....' ,existedUser)
+
        reset()
            
     };
@@ -96,7 +94,7 @@ export default function SignUp() {
         SetUserData(userDataS)
 
     }
-        console.log('Fucn....' ,t?.users)
+       
     return (
         <ThemeProvider theme={theme}>
             <Container component="main" maxWidth="xs">

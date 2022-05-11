@@ -16,8 +16,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { signIn } from './store/signInSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import { Password } from '@mui/icons-material';
-// import SignUp from '../SignUp/SignUp';
-// import { useNavigate } from "react-router-dom";
+
 
 function Copyright() {
   return (
@@ -68,12 +67,6 @@ export default function SignIn() {
   const classes = useStyles();
   const [Email , setEmail] = useState("")
   const [Passsword , setPassword] = useState("")
-  const [VerifiedEmail , setVerifiedEmail] = useState(false)
-  // const navigate = useNavigate();
-  const userData = useSelector((state)=>state.persistedReducer.AddUserReducer.users)
-  
-  const emailStatus = useSelector((state)=>state.persistedReducer.signInReducer.userStatus)
-  // const tokenInState =  useSelector((state)=>state.signInSlice.token)
   const dispatch = useDispatch()
 
   const validateEmail = (email) => {
@@ -86,7 +79,8 @@ export default function SignIn() {
 
     if (Email === '' || Email.length <7 || Password === '' || Password.length <5){
       
-      toast(" Fields verification required ...")
+      toast(" Fields verification required , ...")
+      toast("Password should be 5 digets long ,")
       return
     }
     

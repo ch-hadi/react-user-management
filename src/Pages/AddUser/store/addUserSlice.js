@@ -1,5 +1,4 @@
 import { createSlice  ,createAsyncThunk} from "@reduxjs/toolkit";
-// import {Token} from './../../Auth/Token'
 
   export const createAccount = createAsyncThunk(
     'users/createAccount',
@@ -7,11 +6,6 @@ import { createSlice  ,createAsyncThunk} from "@reduxjs/toolkit";
     async (data) => {
 
 
-      // const res = await Token.post('/create-user',data )
-    
-    //  const resData = res.data
-    //  console.log('ok ok ok ....',data)
-    // console.log('in thunk ...',data)
      return  data
     }
   )
@@ -31,7 +25,8 @@ export const signUpSlice = createSlice({
     name: 'signUpSlice' ,
 
     initialState:{
-      users:""
+      users:"", 
+      existUser:'okno',
     },
 
     reducers :{
@@ -39,10 +34,22 @@ export const signUpSlice = createSlice({
     },
     extraReducers: (builder)=>{
         builder.addCase(createAccount.fulfilled, (state , action)=>{
-            const data = (action.payload)             
-            // void state.users.push(data)
+            const data = (action.payload)            
 
             state.users = [...state.users , data]
+            // state.users.length == 0 ?  ( state.users = [...state.users , data]) : 
+
+          //  (state.users?.filter((userEmail)=>{
+
+          //   if (userEmail.email === data){
+
+          //      console.log('matched')
+          //   }
+           
+          //   return
+
+          //  }))
+          //  state.users = [...state.users , data]
             
 
         })
@@ -52,15 +59,11 @@ export const signUpSlice = createSlice({
              state.users = state.users?.filter((i)=>
 
                 i.email !== action.payload
-                // console.log('emails are ...',i.email)
+               
 
               )
 
-            // console.log('em....' , em)
-
-            // state.users = state.users.map((i) =>{
-            //   console.log('oooo' , i.email)
-            // }
+            
         })
 
     }
