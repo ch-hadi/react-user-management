@@ -2,16 +2,21 @@ import React, { useEffect, useState} from 'react';
 import moment from 'moment'
 import IdleTimer from 'react-idle-timer'
 import { IdleTimeOutModal } from './IdleTimeOutModal'
+import { useDispatch } from 'react-redux';
+import { Logout ,signIn } from '../../Pages/SignIn/store/signInSlice';
+
 
 const IdleTimeOutHandler = (props)=>{
     const[showModal,setShowModal]=useState(false)
-    const[isLogout,setLogout]=useState(false)
+    const dispatch = useDispatch();
+    // const[isLogout,setLogout]=useState(false)
+    const emailStatus = useSelector((state)=>state.persistedReducer.signInReducer.userStatus)
     let timer=undefined;
     const events= ['click','load','keydown']
     const eventHandler =(eventType)=>{
         
-        console.log(eventType)
-        if(!isLogout){
+        // console.log(eventType)
+        if(emailStatus == false){
             localStorage.setItem('lastInteractionTime',moment() )
             if(timer){
                 props.onActive();
@@ -41,7 +46,7 @@ const IdleTimeOutHandler = (props)=>{
             let lastInteractionTime=localStorage.getItem('lastInteractionTime')
             const diff = moment.duration(moment().diff(moment(lastInteractionTime)));
             let timeOutInterval=props.timeOutInterval?props.timeOutInterval:6000;
-            if(isLogout){
+            if(emailStatus){
                 clearTimeout(timer)
             }else{
                 if(diff._milliseconds<timeOutInterval){
@@ -77,12 +82,13 @@ const IdleTimeOutHandler = (props)=>{
     
     const handleContinueSession = ()=>{
         setShowModal(false)
-        setLogout(false)
+        dispatch(signIn({user : 'true'}))
+        
     }
     const handleLogout = ()=>{
         removeEvents();
         clearTimeout(timer);
-        setLogout(true)
+        dispatch(Logout())
         props.onLogout();
         setShowModal(false)
         
