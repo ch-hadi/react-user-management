@@ -14,6 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux'
 import { signIn } from './store/signInSlice';
+import { ToastContainer, toast } from 'react-toastify';
+import { Password } from '@mui/icons-material';
 // import SignUp from '../SignUp/SignUp';
 // import { useNavigate } from "react-router-dom";
 
@@ -66,6 +68,7 @@ export default function SignIn() {
   const classes = useStyles();
   const [Email , setEmail] = useState("")
   const [Passsword , setPassword] = useState("")
+  const [VerifiedEmail , setVerifiedEmail] = useState(false)
   // const navigate = useNavigate();
   const userData = useSelector((state)=>state.persistedReducer.AddUserReducer.users)
   
@@ -73,39 +76,42 @@ export default function SignIn() {
   // const tokenInState =  useSelector((state)=>state.signInSlice.token)
   const dispatch = useDispatch()
 
+  const validateEmail = (email) => {
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  };
+  
   const handleSubmit =()=>{
 
-    // userData?.filter((user)=>{
+    if (Email === '' || Email.length <7 || Password === '' || Password.length <5){
+      
+      toast(" Fields verification required ...")
+      return
+    }
+    
 
+    if (validateEmail(Email)){
       let email , password
       email = 'a@c.com'
-      password ='12'
-
+      password ='12345'
+      
       if (email === Email && password === Passsword){
       
         dispatch(signIn({user : 'true'}))
         return
-      }
-      console.log('Not Found..')
+      } toast("User not found !")
 
+    }
 
-
-      
-    // })
-
-    
-    // dispatch(signIn(data))
-    // console.log('ok')
-    
+    toast('Email field is not validate')
+     
     setEmail('')
     setPassword('')
 
   }
-  const handleClick=()=>{
-    // navigate(`create-user`)
-  }
+  
 
-  console.log('status is ..',emailStatus)
   return (
 
     <Grid container component="main" className={classes.root}>
@@ -130,6 +136,7 @@ export default function SignIn() {
               value={Email}
               label="Email Address"
               name="email"
+              type='email'
               autoComplete="email"
               autoFocus
               onChange={(e)=>setEmail(e.target.value)}
@@ -177,6 +184,7 @@ export default function SignIn() {
               <Copyright />
             </Box>
           </div>
+          <ToastContainer />
         </div>
       </Grid>
     </Grid>

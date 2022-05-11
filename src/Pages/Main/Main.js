@@ -8,7 +8,7 @@ import {useDispatch, useSelector } from 'react-redux'
 // import {Link} from 'react-router-dom'
 import {Logout } from '../SignIn/store/signInSlice'
 import Card from '../../Components/Card/Card'
-import IdleTimeOutHandler from '../../Components/Timer/IdleTimeOutHandler'
+// import IdleTimeOutHandler from '../../Components/Timer/IdleTimeOutHandler'
 // import Timmer from '../../Components/Timmer/Timmer'
 
 
