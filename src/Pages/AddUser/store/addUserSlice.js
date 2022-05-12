@@ -1,5 +1,7 @@
 import { createSlice  ,createAsyncThunk} from "@reduxjs/toolkit";
 
+import {useDispatch} from 'react-redux'
+
   export const createAccount = createAsyncThunk(
     'users/createAccount',
 
@@ -19,14 +21,14 @@ import { createSlice  ,createAsyncThunk} from "@reduxjs/toolkit";
     }
   )
 
-
+  
 export const signUpSlice = createSlice({
 
     name: 'signUpSlice' ,
 
     initialState:{
       users:"", 
-      existUser:'okno',
+      
     },
 
     reducers :{
@@ -34,23 +36,29 @@ export const signUpSlice = createSlice({
     },
     extraReducers: (builder)=>{
         builder.addCase(createAccount.fulfilled, (state , action)=>{
-            const data = (action.payload)            
+        
+          let user = action.payload
 
-            state.users = [...state.users , data]
-            // state.users.length == 0 ?  ( state.users = [...state.users , data]) : 
+        if (state.users.length == 0){
 
-          //  (state.users?.filter((userEmail)=>{
+          state.users= [...state.users , user]
+          console.log('in if statment')
 
-          //   if (userEmail.email === data){
+        }
+          state.users.filter((item)=>{
 
-          //      console.log('matched')
-          //   }
+            if (item.email != user.email){
+
+              state.users = [...state.users , user]
+             
+              return 
+            }
+
+            console.log('user exist')
+            return
            
-          //   return
-
-          //  }))
-          //  state.users = [...state.users , data]
-            
+          })
+        
 
         })
         builder.addCase(DeleteUser.fulfilled , (state , action)=>{

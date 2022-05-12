@@ -182,7 +182,7 @@ export default function Main() {
      
      
    
-   {/* <IdleTimeOutHandler/> */}
+   <IdleTimeOutHandler/>
    {/* <Timmer delay={4000} onIdle='Idle' onActive='active' /> */}
     </Popover>
   )

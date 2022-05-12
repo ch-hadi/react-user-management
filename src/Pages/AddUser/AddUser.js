@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createAccount } from './store/addUserSlice';
 import {useDispatch, useSelector } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router';
 
 function Copyright(props) {
     return (
@@ -38,9 +39,8 @@ export default function AddUser() {
     // const [loading, setLoading] = useState(false);
     const dispatch = useDispatch()
 
-    const existedUser = useSelector((state)=>state.persistedReducer.AddUserReducer.existUser)
 
-   
+   const navigation = useNavigate()
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -71,12 +71,12 @@ export default function AddUser() {
             id:uuidv4()
         };
         
-        // console.log(userData)
+      
        dispatch(createAccount(userData))
 
-       console.log('Exist....' ,existedUser)
-
-       reset()
+      setTimeout(()=>{
+        // navigation('/')   
+      } , 3000)    
            
     };
 
@@ -94,6 +94,8 @@ export default function AddUser() {
         SetUserData(userDataS)
 
     }
+
+   
        
     return (
         <ThemeProvider theme={theme}>
@@ -148,7 +150,7 @@ export default function AddUser() {
                                     name="username"
                                     // value={UserNamr}
                                     autoComplete="username"
-                                    // value={userData1.UserName}
+                                    value={userData1.UserName}
                                 />
                             </Grid>
                             <Grid item xs={6}>
